@@ -69,6 +69,7 @@ class App extends Component {
     if(route === 'images') {
       return (
         <div>
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
           <NavBar onRouteChange={this.onRouteChange} />
           <Images />
         </div>
