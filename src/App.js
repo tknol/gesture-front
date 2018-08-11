@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
-import Logo from './components/Logo/Logo';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
+import NavBar from './components/NavBar/NavBar';
+import Images from './components/Images/Images';
 import './App.css';
 
 const app = new Clarifai.App({
@@ -57,12 +58,23 @@ class App extends Component {
   this.setState({user: {
     id: data.id,
     name: data.name,
-    email: data.email    
+    email: data.email
   }})
 }
 
   render() {
     const { isSignedIn, imageUrl, route, box } = this.state;
+    //let fragment = '<SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />';
+
+    if(route === 'images') {
+      return (
+        <div>
+          <NavBar onRouteChange={this.onRouteChange} />
+          <Images />
+        </div>
+      );
+    }
+
     return (
       <div className="App">
          <Particles className='particles'
@@ -71,8 +83,7 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
-              <Logo />
-
+              <NavBar onRouteChange={this.onRouteChange} />
 
             </div>
           : (
