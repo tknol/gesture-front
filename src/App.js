@@ -7,6 +7,7 @@ import Signin from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 import NavBar from './components/NavBar/NavBar';
 import Images from './components/Images/Images';
+import About from './components/About/About';
 import './App.css';
 
 const app = new Clarifai.App({
@@ -45,6 +46,20 @@ class App extends Component {
       }
     }
 
+    onLoadImages = () => {
+      fetch('http://localhost:8080/api/images', {
+        method: 'get',
+        headers: {'Content-Type': 'application/json'},
+      })
+      .then(response => response.json())
+      .then(function(data) {
+        console.log(data);
+      });
+
+
+
+    }
+
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState({isSignedIn: false})
@@ -52,6 +67,7 @@ class App extends Component {
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
+    console.log(' route:' + route);
   }
 
   loadUser = (data) => {
@@ -62,6 +78,8 @@ class App extends Component {
   }})
 }
 
+
+
   render() {
     const { isSignedIn, imageUrl, route, box } = this.state;
     //let fragment = '<SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />';
@@ -71,7 +89,15 @@ class App extends Component {
         <div>
           <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
           <NavBar onRouteChange={this.onRouteChange} />
-          <Images />
+          <Images onLoadImages={this.onLoadImages} />
+        </div>
+      );
+    } else if(route === 'about') {
+      return (
+        <div>
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+          <NavBar onRouteChange={this.onRouteChange} />
+          <About />
         </div>
       );
     }

@@ -1,8 +1,13 @@
 import React from 'react';
 
-const Images = () => {
+const Images = ({onLoadImages}) => {
+
   return (
-    <div>images</div>
+
+
+    <div>
+      {onLoadImages()}
+      images</div>
   );
 }
 
